@@ -13,6 +13,9 @@ class request_body(BaseModel):
 # Carregar modelo para realizar a predição 
 modelo_pontuacao = joblib.load('./modelo_regressao.pkl')
 
+# Decorador com uma função para indicar o FastAPI vai ser exposto com uma API
+
+@app.post('/predict')
 def predict(data: request_body):
   # Preparar os dados para predição
   input_feature = [[data.horas_estudos]]
@@ -22,4 +25,3 @@ def predict(data: request_body):
 
   return {'pontuacao_teste': y_pred.toList()}
 
-# uvicorn api_modelo_regressao:app --reload
